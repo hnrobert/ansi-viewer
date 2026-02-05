@@ -23,4 +23,9 @@ export default defineConfig({
     "assert",
     "module",
   ],
+  // Bundle micromatch since pnpm's symlinked node_modules causes issues
+  // when packaged with vsce
+  esbuildOptions(options) {
+    options.external = options.external?.filter((dep) => dep !== "micromatch");
+  },
 });
