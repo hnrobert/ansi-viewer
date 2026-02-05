@@ -12,15 +12,7 @@ export default defineConfig({
   splitting: false,
   minify: false,
   shims: false,
-  skipNodeModulesBundle: true,
-  external: [
-    "vscode",
-    // Node builtins are treated as external by default, this is explicit
-    "fs",
-    "path",
-    "os",
-    "util",
-    "assert",
-    "module",
-  ],
+  skipNodeModulesBundle: false,
+  external: ["vscode", "fs", "path", "os", "util", "assert", "module"],
+  noExternal: ["micromatch"],
 });
