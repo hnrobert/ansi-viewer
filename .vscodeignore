@@ -14,9 +14,10 @@ pnpm-workspace.yaml
 *.yml
 
 # 忽略测试文件
-test/**
+**/test
 **/*.spec.*
 **/*.test.*
+**/.claude
 
 # 其它你不想要的
 *.md

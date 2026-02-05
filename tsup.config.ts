@@ -12,20 +12,7 @@ export default defineConfig({
   splitting: false,
   minify: false,
   shims: false,
-  skipNodeModulesBundle: true,
-  external: [
-    "vscode",
-    // Node builtins are treated as external by default, this is explicit
-    "fs",
-    "path",
-    "os",
-    "util",
-    "assert",
-    "module",
-  ],
-  // Bundle micromatch since pnpm's symlinked node_modules causes issues
-  // when packaged with vsce
-  esbuildOptions(options) {
-    options.external = options.external?.filter((dep) => dep !== "micromatch");
-  },
+  skipNodeModulesBundle: false,
+  external: ["vscode", "fs", "path", "os", "util", "assert", "module"],
+  noExternal: ["micromatch"],
 });
