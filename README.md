@@ -42,9 +42,9 @@ The extension fetches the colors from the current theme and aims to look as good
 
 ![ANSI Text preview; various themes](images/screenshot-themes.gif)
 
-## Supported ANSI escape codes
+## Supported ANSI escape codes (Enhanced)
 
-**Enhanced Support (v1.2.0+)**: This extension now supports a comprehensive range of ANSI escape sequences including:
+This extension now supports a comprehensive range of ANSI escape sequences including:
 
 - **SGR (Select Graphic Rendition)**: Colors, text formatting (bold, italic, underline, etc.)
 - **Cursor Control**: Position (H, f), movement (A-G), save/restore (s, u)
@@ -53,8 +53,6 @@ The extension fetches the colors from the current theme and aims to look as good
 - **OSC Commands**: Window titles, color palette control, clipboard operations
 - **Character Sets**: ASCII, line drawing, and international character sets
 - **Device Queries**: Status reports and device attributes
-
-See [ENHANCED_ANSI_SUPPORT.md](ENHANCED_ANSI_SUPPORT.md) for complete documentation of supported sequences.
 
 ### Visual Examples
 
