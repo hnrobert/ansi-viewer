@@ -76,7 +76,7 @@ Basic colors and formatting:
 
   You can customize this behaviour in VS Code settings using gitignore-style patterns:
 
-  ```json
+  ```jsonc
   {
     "ansiViewer.autoLanguageModeFiles": [
       "**/*.ans",
