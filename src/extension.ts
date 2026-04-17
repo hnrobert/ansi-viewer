@@ -55,12 +55,12 @@ function shouldSetAnsiLanguageMode(document: TextDocument): boolean {
   const config = workspace.getConfiguration("ansiViewer");
   const autoLanguageModeFiles: string[] = config.get("autoLanguageModeFiles", ["**/*.ans", "**/*.ansi"]);
 
-  console.log(`[ANSI Extension] Checking file: ${document.fileName}`);
-  console.log(`[ANSI Extension] Config patterns:`, autoLanguageModeFiles);
-  console.log(`[ANSI Extension] Current language ID: ${document.languageId}`);
+  // console.log(`[ANSI Extension] Checking file: ${document.fileName}`);
+  // console.log(`[ANSI Extension] Config patterns:`, autoLanguageModeFiles);
+  // console.log(`[ANSI Extension] Current language ID: ${document.languageId}`);
 
   if (autoLanguageModeFiles.length === 0) {
-    console.log(`[ANSI Extension] No patterns configured, skipping`);
+    // console.log(`[ANSI Extension] No patterns configured, skipping`);
     return false;
   }
 
@@ -77,14 +77,14 @@ function shouldSetAnsiLanguageMode(document: TextDocument): boolean {
     relativePath = relativePath.replace(/\\/g, "/");
   }
 
-  console.log(`[ANSI Extension] File name: ${fileName}`);
-  console.log(`[ANSI Extension] Relative path: ${relativePath}`);
+  // console.log(`[ANSI Extension] File name: ${fileName}`);
+  // console.log(`[ANSI Extension] Relative path: ${relativePath}`);
 
   const shouldSet = autoLanguageModeFiles.some((pattern: string) => {
     // 标准化模式：将 Windows 路径分隔符转换为 Unix 风格
     const normalizedPattern = pattern.replace(/\\/g, "/");
 
-    console.log(`[ANSI Extension] Testing pattern: ${normalizedPattern}`);
+    // console.log(`[ANSI Extension] Testing pattern: ${normalizedPattern}`);
 
     // 如果模式不包含路径分隔符，则同时匹配文件名和完整路径
     if (!normalizedPattern.includes("/")) {
@@ -93,20 +93,20 @@ function shouldSetAnsiLanguageMode(document: TextDocument): boolean {
       const relativePathMatch = micromatch.isMatch(relativePath, normalizedPattern);
       const expandedMatch = micromatch.isMatch(relativePath, `**/${normalizedPattern}`);
 
-      console.log(
-        `[ANSI Extension] Pattern ${normalizedPattern} - fileName match: ${fileNameMatch}, relativePath match: ${relativePathMatch}, expanded match: ${expandedMatch}`,
-      );
+      // console.log(
+      //   `[ANSI Extension] Pattern ${normalizedPattern} - fileName match: ${fileNameMatch}, relativePath match: ${relativePathMatch}, expanded match: ${expandedMatch}`,
+      // );
 
       return fileNameMatch || relativePathMatch || expandedMatch;
     } else {
       // 对于包含路径的模式，直接匹配相对路径
       const match = micromatch.isMatch(relativePath, normalizedPattern);
-      console.log(`[ANSI Extension] Pattern ${normalizedPattern} - path match: ${match}`);
+      // console.log(`[ANSI Extension] Pattern ${normalizedPattern} - path match: ${match}`);
       return match;
     }
   });
 
-  console.log(`[ANSI Extension] Should set ANSI language mode: ${shouldSet}`);
+  // console.log(`[ANSI Extension] Should set ANSI language mode: ${shouldSet}`);
   return shouldSet;
 }
 
@@ -115,21 +115,21 @@ function shouldSetAnsiLanguageMode(document: TextDocument): boolean {
  */
 async function setAnsiLanguageMode(document: TextDocument, context: string): Promise<void> {
   if (document.languageId === "ansi") {
-    console.log(`[ANSI Extension] Document ${document.fileName} is already in ANSI mode`);
+    // console.log(`[ANSI Extension] Document ${document.fileName} is already in ANSI mode`);
     return;
   }
 
-  console.log(`[ANSI Extension] Setting language mode to ANSI for ${context}: ${document.fileName}`);
+  // console.log(`[ANSI Extension] Setting language mode to ANSI for ${context}: ${document.fileName}`);
   try {
     await languages.setTextDocumentLanguage(document, "ansi");
-    console.log(`[ANSI Extension] Successfully set language mode to ANSI for ${context}`);
+    // console.log(`[ANSI Extension] Successfully set language mode to ANSI for ${context}`);
   } catch (error) {
-    console.error(`[ANSI Extension] Error setting language mode for ${context}:`, error);
+    // console.error(`[ANSI Extension] Error setting language mode for ${context}:`, error);
   }
 }
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  console.log(`[ANSI Extension] Extension activated`);
+  // console.log(`[ANSI Extension] Extension activated`);
 
   // 创建状态栏项目
   statusBarItem = window.createStatusBarItem(StatusBarAlignment.Right, 100.1);
@@ -172,7 +172,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   context.subscriptions.push(
     workspace.onDidChangeConfiguration(async (event) => {
       if (event.affectsConfiguration("ansiViewer.autoLanguageModeFiles")) {
-        console.log(`[ANSI Extension] Configuration changed, re-evaluating all open documents`);
+        // console.log(`[ANSI Extension] Configuration changed, re-evaluating all open documents`);
 
         // 重新检查所有打开的文档
         for (const editor of window.visibleTextEditors) {
@@ -193,7 +193,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
 
       // 监听转义序列显示配置的变更
       if (event.affectsConfiguration("ansiViewer.escapeSequenceDisplay")) {
-        console.log(`[ANSI Extension] Escape sequence display configuration changed, refreshing decorations`);
+        // console.log(`[ANSI Extension] Escape sequence display configuration changed, refreshing decorations`);
 
         // 触发所有 ANSI 文档的装饰刷新
         for (const editor of window.visibleTextEditors) {
@@ -207,7 +207,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   ); // 监听文档打开事件，自动设置 ANSI 语言模式
   context.subscriptions.push(
     workspace.onDidOpenTextDocument(async (document: TextDocument) => {
-      console.log(`[ANSI Extension] Document opened: ${document.fileName}, language: ${document.languageId}`);
+      // console.log(`[ANSI Extension] Document opened: ${document.fileName}, language: ${document.languageId}`);
       if (shouldSetAnsiLanguageMode(document)) {
         await setAnsiLanguageMode(document, "document opened");
       }
@@ -218,9 +218,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
   context.subscriptions.push(
     window.onDidChangeActiveTextEditor(async (editor) => {
       if (editor) {
-        console.log(
-          `[ANSI Extension] Active editor changed: ${editor.document.fileName}, language: ${editor.document.languageId}`,
-        );
+        // console.log(
+        //   `[ANSI Extension] Active editor changed: ${editor.document.fileName}, language: ${editor.document.languageId}`,
+        // );
         if (shouldSetAnsiLanguageMode(editor.document)) {
           await setAnsiLanguageMode(editor.document, "active editor changed");
         }
@@ -238,7 +238,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     workspace.onDidChangeConfiguration((changedConfig) => {
       // 如果插件启用状态改变，更新状态栏
       if (changedConfig.affectsConfiguration("ansiViewer.enable")) {
-        console.log("ansiViewer.enable changed, updating status bar");
+        // console.log("ansiViewer.enable changed, updating status bar");
         updateStatusBar(isAnsiViewerEnabled());
       }
 
@@ -246,7 +246,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       if (changedConfig.affectsConfiguration("ansiViewer.escapeSequenceDisplay")) {
         // 只有在插件启用时才处理
         if (isAnsiViewerEnabled()) {
-          console.log("ansiViewer.escapeSequenceDisplay changed, clearing escape sequence decorations");
+          // console.log("ansiViewer.escapeSequenceDisplay changed, clearing escape sequence decorations");
           ansiDecorationProvider.clearEscapeSequenceDecorations();
 
           // 为所有 ANSI 文件重新触发装饰
@@ -295,9 +295,9 @@ export async function activate(context: ExtensionContext): Promise<void> {
   );
 
   // 检查当前已打开的文档
-  console.log(`[ANSI Extension] Checking already opened documents`);
+  // console.log(`[ANSI Extension] Checking already opened documents`);
   if (window.activeTextEditor) {
-    console.log(`[ANSI Extension] Found active editor: ${window.activeTextEditor.document.fileName}`);
+    // console.log(`[ANSI Extension] Found active editor: ${window.activeTextEditor.document.fileName}`);
     const document = window.activeTextEditor.document;
     if (shouldSetAnsiLanguageMode(document)) {
       await setAnsiLanguageMode(document, "already opened document");

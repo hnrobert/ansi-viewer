@@ -14,7 +14,7 @@ export function registerTextEditorDecorationProvider(provider: TextEditorDecorat
 
 export async function executeRegisteredTextEditorDecorationProviders(
   editor: TextEditor,
-  token: CancellationToken
+  token: CancellationToken,
 ): Promise<void> {
   for (const provider of registeredProviders) {
     let decorations: [string, Range[]][] | null | undefined;
@@ -22,7 +22,7 @@ export async function executeRegisteredTextEditorDecorationProviders(
     try {
       decorations = await provider.provideDecorationRanges(editor.document, token);
     } catch (error) {
-      console.error(`error providing decorations`, error);
+      // console.error(`error providing decorations`, error);
       return;
     }
 
@@ -43,7 +43,7 @@ export async function executeRegisteredTextEditorDecorationProviders(
         try {
           decorationType = await provider.resolveDecoration(key, token);
         } catch (error) {
-          console.error(`error providing decorations for key ${key}`, error);
+          // console.error(`error providing decorations for key ${key}`, error);
           continue;
         }
 
@@ -52,7 +52,7 @@ export async function executeRegisteredTextEditorDecorationProviders(
         }
 
         if (!decorationType) {
-          console.error(`no decoration resolved for key ${key}`);
+          // console.error(`no decoration resolved for key ${key}`);
           continue;
         }
 
