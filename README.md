@@ -3,10 +3,10 @@
 ANSI Color styling and previewer for your text editor.
 
 [![Visual Studio Marketplace](https://flat.badgen.net/vs-marketplace/i/HNRobert.ansi-viewer?icon=visualstudio)](https://marketplace.visualstudio.com/items?itemName=HNRobert.ansi-viewer)
-[![GitHub](https://flat.badgen.net/github/release/HNRobert/ansi-viewer?icon=github)](https://github.com/HNRobert/ansi-viewer)
+[![GitHub](https://flat.badgen.net/github/release/HNRobert/vscode-ansi-viewer?icon=github)](https://github.com/hnRobert/vscode-ansi-viewer)
 [![MIT License](https://flat.badgen.net/badge/license/MIT/blue)](LICENSE)
-[![Open Issues](https://flat.badgen.net/github/open-issues/HNRobert/ansi-viewer?icon=github)](https://github.com/HNRobert/ansi-viewer/issues)
-[![Closed Issues](https://flat.badgen.net/github/closed-issues/HNRobert/ansi-viewer?icon=github)](https://github.com/HNRobert/ansi-viewer/issues?q=is%3Aissue+is%3Aclosed)
+[![Open Issues](https://flat.badgen.net/github/open-issues/HNRobert/vscode-ansi-viewer?icon=github)](https://github.com/hnRobert/vscode-ansi-viewer/issues)
+[![Closed Issues](https://flat.badgen.net/github/closed-issues/HNRobert/vscode-ansi-viewer?icon=github)](https://github.com/hnRobert/vscode-ansi-viewer/issues?q=is%3Aissue+is%3Aclosed)
 
 > Forked from [iliazeus/vscode-ansi](https://github.com/iliazeus/vscode-ansi) and enhanced with more complete ANSI escape code and additional function support.
 
